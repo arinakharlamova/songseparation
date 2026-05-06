@@ -1,0 +1,183 @@
+2026-05-06 19:58:03.425 | INFO     | app.main:<module>:27 - Starting Source Separation API
+2026-05-06 19:58:24.606 | INFO     | app.main:<module>:27 - Starting Source Separation API
+2026-05-06 19:58:43.694 | INFO     | app.main:<module>:27 - Starting Source Separation API
+2026-05-06 19:58:43.763 | INFO     | app.main:startup_event:109 - API starting up...
+2026-05-06 19:58:43.763 | INFO     | app.main:startup_event:110 - Device: cpu
+2026-05-06 19:58:43.763 | INFO     | app.main:startup_event:111 - Model: htdemucs_ft
+2026-05-06 19:59:23.638 | INFO     | app.main:<module>:27 - Starting Source Separation API
+2026-05-06 19:59:23.679 | INFO     | app.main:startup_event:109 - API starting up...
+2026-05-06 19:59:23.679 | INFO     | app.main:startup_event:110 - Device: cpu
+2026-05-06 19:59:23.682 | INFO     | app.main:startup_event:111 - Model: htdemucs_ft
+2026-05-06 20:49:25.988 | INFO     | app.main:<module>:27 - Starting Source Separation API
+2026-05-06 20:50:10.322 | INFO     | app.main:<module>:28 - Starting Source Separation API
+2026-05-06 21:02:14.390 | INFO     | app.separator:__init__:91 - SourceSeparator: model=htdemucs_ft, device=cpu
+2026-05-06 21:02:19.971 | INFO     | app.separator:_separation_worker:34 - [Worker] Loading model: htdemucs_ft
+2026-05-06 21:12:52.475 | INFO     | app.separator:__init__:91 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:12:57.856 | INFO     | app.separator:_separation_worker:34 - [Worker] Loading model: htdemucs
+2026-05-06 21:15:13.242 | INFO     | app.separator:__init__:103 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:15:18.063 | INFO     | app.separator:_separation_worker:51 - [Worker] Loading model: htdemucs
+2026-05-06 21:15:18.591 | INFO     | app.separator:_separation_worker:62 - [Worker] Loaded: torch.Size([2, 4322304]), sr=44100
+2026-05-06 21:15:45.499 | INFO     | app.separator:__init__:104 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:15:50.129 | INFO     | app.separator:_separation_worker:51 - [Worker] Loading model: htdemucs
+2026-05-06 21:15:50.646 | INFO     | app.separator:_separation_worker:62 - [Worker] Loaded: torch.Size([2, 4322304]), sr=44100
+2026-05-06 21:19:57.292 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs_ft, device=cpu
+2026-05-06 21:20:03.767 | INFO     | app.separator:_separation_worker:50 - [Worker] Loading model: htdemucs_ft
+2026-05-06 21:29:57.302 | WARNING  | app.separator:separate_with_timeout:171 - Timeout after 600s, terminating process
+2026-05-06 21:30:25.753 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:30:30.597 | INFO     | app.separator:_separation_worker:50 - [Worker] Loading model: htdemucs
+2026-05-06 21:30:31.088 | INFO     | app.separator:_separation_worker:61 - [Worker] Loaded: torch.Size([2, 4322304]), sr=44100
+2026-05-06 21:47:53.201 | INFO     | app.separator:_separation_worker:50 - [Worker] Loading model: htdemucs_ft
+2026-05-06 21:57:19.092 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:57:25.486 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:57:25.550 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:57:25.552 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:57:25.555 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:57:25.558 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:57:25.830 | INFO     | app.separator:_separation_worker:50 - [Worker] Loading model: htdemucs
+2026-05-06 21:57:26.462 | INFO     | app.separator:_separation_worker:61 - [Worker] Loaded: torch.Size([2, 8843231]), sr=44100
+2026-05-06 21:59:28.413 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:59:33.988 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:59:33.997 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:59:33.999 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:59:34.001 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:59:34.002 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 21:59:34.302 | INFO     | app.separator:_separation_worker:50 - [Worker] Loading model: htdemucs
+2026-05-06 21:59:35.020 | INFO     | app.separator:_separation_worker:61 - [Worker] Loaded: torch.Size([2, 9265664]), sr=44100
+2026-05-06 22:01:35.349 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:01:40.828 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:01:40.834 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:01:40.837 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:01:40.840 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:01:40.842 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:01:41.101 | INFO     | app.separator:_separation_worker:50 - [Worker] Loading model: htdemucs
+2026-05-06 22:01:41.698 | INFO     | app.separator:_separation_worker:61 - [Worker] Loaded: torch.Size([2, 7920084]), sr=44100
+2026-05-06 22:03:27.463 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:03:32.796 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:03:32.802 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:03:32.806 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:03:32.809 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:03:32.811 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:03:33.082 | INFO     | app.separator:_separation_worker:50 - [Worker] Loading model: htdemucs
+2026-05-06 22:03:33.674 | INFO     | app.separator:_separation_worker:61 - [Worker] Loaded: torch.Size([2, 9675225]), sr=44100
+2026-05-06 22:05:55.305 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:06:04.310 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:06:04.331 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:06:04.339 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:06:04.347 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:06:04.355 | INFO     | app.separator:__init__:106 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 22:06:04.979 | INFO     | app.separator:_separation_worker:50 - [Worker] Loading model: htdemucs
+2026-05-06 22:06:06.328 | INFO     | app.separator:_separation_worker:61 - [Worker] Loaded: torch.Size([2, 11241562]), sr=44100
+2026-05-06 23:59:19.197 | INFO     | app.evaluation:evaluate_dataset:279 - 
+============================================================
+2026-05-06 23:59:19.197 | INFO     | app.evaluation:evaluate_dataset:280 - Evaluating track: AM Contra - Heart Peripheral
+2026-05-06 23:59:19.197 | INFO     | app.evaluation:evaluate_dataset:281 - ============================================================
+2026-05-06 23:59:19.607 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating vocals: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:20.017 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating drums: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:20.442 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating bass: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:20.862 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating other: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:20.872 | INFO     | app.evaluation:evaluate_dataset:279 - 
+============================================================
+2026-05-06 23:59:20.872 | INFO     | app.evaluation:evaluate_dataset:280 - Evaluating track: Al James - Schoolboy Facination
+2026-05-06 23:59:20.872 | INFO     | app.evaluation:evaluate_dataset:281 - ============================================================
+2026-05-06 23:59:21.190 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating vocals: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:21.475 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating drums: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:21.769 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating bass: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:22.086 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating other: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:22.100 | INFO     | app.evaluation:evaluate_dataset:279 - 
+============================================================
+2026-05-06 23:59:22.101 | INFO     | app.evaluation:evaluate_dataset:280 - Evaluating track: Angels In Amplifiers - I'm Alright
+2026-05-06 23:59:22.101 | INFO     | app.evaluation:evaluate_dataset:281 - ============================================================
+2026-05-06 23:59:22.214 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating vocals: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:22.324 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating drums: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:22.422 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating bass: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:22.538 | ERROR    | app.evaluation:evaluate_source:233 - Error evaluating other: evaluate() got an unexpected keyword argument 'reference'. Did you mean 'references'?
+2026-05-06 23:59:22.548 | INFO     | app.evaluation:evaluate_dataset:279 - 
+============================================================
+2026-05-06 23:59:22.549 | INFO     | app.evaluation:evaluate_dataset:280 - Evaluating track: Arise - Run Run Run
+2026-05-06 23:59:22.549 | INFO     | app.evaluation:evaluate_dataset:281 - ============================================================
+2026-05-06 23:59:22.549 | WARNING  | app.evaluation:evaluate_source:215 - vocals: Estimated not found: output\musdb_eval\Arise - Run Run Run\vocals.wav
+2026-05-06 23:59:22.550 | WARNING  | app.evaluation:evaluate_source:215 - drums: Estimated not found: output\musdb_eval\Arise - Run Run Run\drums.wav
+2026-05-06 23:59:22.551 | WARNING  | app.evaluation:evaluate_source:215 - bass: Estimated not found: output\musdb_eval\Arise - Run Run Run\bass.wav
+2026-05-06 23:59:22.551 | WARNING  | app.evaluation:evaluate_source:215 - other: Estimated not found: output\musdb_eval\Arise - Run Run Run\other.wav
+2026-05-06 23:59:22.552 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\BKS - Bulldozer
+2026-05-06 23:59:22.552 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\BKS - Too Much
+2026-05-06 23:59:22.552 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Ben Carrigan - We'll Talk About It All Tonight
+2026-05-06 23:59:22.552 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Bobby Nobody - Stitch Up
+2026-05-06 23:59:22.553 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Buitraker - Revo X
+2026-05-06 23:59:22.553 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Carlos Gonzalez - A Place For Us
+2026-05-06 23:59:22.553 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Cristina Vane - So Easy
+2026-05-06 23:59:22.553 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Detsky Sad - Walkie Talkie
+2026-05-06 23:59:22.553 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Enda Reilly - Cur An Long Ag Seol
+2026-05-06 23:59:22.554 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Forkupines - Semantics
+2026-05-06 23:59:22.554 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Georgia Wonder - Siren
+2026-05-06 23:59:22.554 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Girls Under Glass - We Feel Alright
+2026-05-06 23:59:22.554 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Hollow Ground - Ill Fate
+2026-05-06 23:59:22.554 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\James Elder & Mark M Thompson - The English Actor
+2026-05-06 23:59:22.555 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Juliet's Rescue - Heartbeats
+2026-05-06 23:59:22.555 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Little Chicago's Finest - My Own
+2026-05-06 23:59:22.555 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Louis Cressy Band - Good Time
+2026-05-06 23:59:22.555 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Lyndsey Ollard - Catching Up
+2026-05-06 23:59:22.555 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\M.E.R.C. Music - Knockout
+2026-05-06 23:59:22.556 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Moosmusic - Big Dummy Shake
+2026-05-06 23:59:22.556 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Motor Tapes - Shore
+2026-05-06 23:59:22.556 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Mu - Too Bright
+2026-05-06 23:59:22.556 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Nerve 9 - Pray For The Rain
+2026-05-06 23:59:22.557 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\PR - Happy Daze
+2026-05-06 23:59:22.557 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\PR - Oh No
+2026-05-06 23:59:22.557 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Punkdisco - Oral Hygiene
+2026-05-06 23:59:22.557 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Raft Monk - Tiring
+2026-05-06 23:59:22.558 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Sambasevam Shanmugam - Kaathaadi
+2026-05-06 23:59:22.558 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Secretariat - Borderline
+2026-05-06 23:59:22.558 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Secretariat - Over The Top
+2026-05-06 23:59:22.558 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Side Effects Project - Sing With Me
+2026-05-06 23:59:22.559 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Signe Jakobsen - What Have You Done To Me
+2026-05-06 23:59:22.559 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Skelpolu - Resurrection
+2026-05-06 23:59:22.560 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Speak Softly - Broken Man
+2026-05-06 23:59:22.560 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Speak Softly - Like Horses
+2026-05-06 23:59:22.561 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\The Doppler Shift - Atrophy
+2026-05-06 23:59:22.561 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\The Easton Ellises (Baumi) - SDRNR
+2026-05-06 23:59:22.562 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\The Easton Ellises - Falcon 69
+2026-05-06 23:59:22.562 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\The Long Wait - Dark Horses
+2026-05-06 23:59:22.562 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\The Mountaineering Club - Mallory
+2026-05-06 23:59:22.562 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\The Sunshine Garcia Band - For I Am The Moon
+2026-05-06 23:59:22.563 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Timboz - Pony
+2026-05-06 23:59:22.563 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Tom McKenzie - Directions
+2026-05-06 23:59:22.563 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Triviul feat. The Fiend - Widow
+2026-05-06 23:59:22.564 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\We Fell From The Sky - Not You
+2026-05-06 23:59:22.564 | WARNING  | app.evaluation:evaluate_dataset:276 - Separated track not found: output\musdb_eval\Zeno - Signs
+2026-05-07 00:02:08.391 | INFO     | app.evaluation:evaluate_dataset:290 - 
+============================================================
+2026-05-07 00:02:08.391 | INFO     | app.evaluation:evaluate_dataset:291 - Evaluating track: Al James - Schoolboy Facination
+2026-05-07 00:02:08.391 | INFO     | app.evaluation:evaluate_dataset:292 - ============================================================
+2026-05-07 00:02:09.005 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating vocals: Unable to allocate 33.8 GiB for an array with shape (513, 1, 8843231) and data type float64
+2026-05-07 00:02:09.562 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating drums: Unable to allocate 33.8 GiB for an array with shape (513, 1, 8843231) and data type float64
+2026-05-07 00:02:10.190 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating bass: Unable to allocate 33.8 GiB for an array with shape (513, 1, 8843231) and data type float64
+2026-05-07 00:02:10.738 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating other: Unable to allocate 33.8 GiB for an array with shape (513, 1, 8843231) and data type float64
+2026-05-07 00:02:10.769 | INFO     | app.evaluation:evaluate_dataset:290 - 
+============================================================
+2026-05-07 00:02:10.769 | INFO     | app.evaluation:evaluate_dataset:291 - Evaluating track: AM Contra - Heart Peripheral
+2026-05-07 00:02:10.769 | INFO     | app.evaluation:evaluate_dataset:292 - ============================================================
+2026-05-07 00:02:11.462 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating vocals: Unable to allocate 35.4 GiB for an array with shape (513, 1, 9265664) and data type float64
+2026-05-07 00:02:12.181 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating drums: Unable to allocate 35.4 GiB for an array with shape (513, 1, 9265664) and data type float64
+2026-05-07 00:02:12.908 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating bass: Unable to allocate 35.4 GiB for an array with shape (513, 1, 9265664) and data type float64
+2026-05-07 00:02:13.634 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating other: Unable to allocate 35.4 GiB for an array with shape (513, 1, 9265664) and data type float64
+2026-05-07 00:02:13.667 | INFO     | app.evaluation:evaluate_dataset:290 - 
+============================================================
+2026-05-07 00:02:13.667 | INFO     | app.evaluation:evaluate_dataset:291 - Evaluating track: Angels In Amplifiers - I'm Alright
+2026-05-07 00:02:13.667 | INFO     | app.evaluation:evaluate_dataset:292 - ============================================================
+2026-05-07 00:02:14.252 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating vocals: Unable to allocate 60.4 GiB for an array with shape (1, 7920084, 1024) and data type float64
+2026-05-07 00:02:14.853 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating drums: Unable to allocate 60.4 GiB for an array with shape (1, 7920084, 1024) and data type float64
+2026-05-07 00:02:15.419 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating bass: Unable to allocate 60.4 GiB for an array with shape (1, 7920084, 1024) and data type float64
+2026-05-07 00:02:15.992 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating other: Unable to allocate 60.4 GiB for an array with shape (1, 7920084, 1024) and data type float64
+2026-05-07 00:02:16.029 | INFO     | app.evaluation:evaluate_dataset:290 - 
+============================================================
+2026-05-07 00:02:16.029 | INFO     | app.evaluation:evaluate_dataset:291 - Evaluating track: Arise - Run Run Run
+2026-05-07 00:02:16.029 | INFO     | app.evaluation:evaluate_dataset:292 - ============================================================
+2026-05-07 00:02:16.582 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating vocals: Unable to allocate 37.0 GiB for an array with shape (513, 1, 9675225) and data type float64
+2026-05-07 00:02:17.194 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating drums: Unable to allocate 37.0 GiB for an array with shape (513, 1, 9675225) and data type float64
+2026-05-07 00:02:17.841 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating bass: Unable to allocate 37.0 GiB for an array with shape (513, 1, 9675225) and data type float64
+2026-05-07 00:02:18.470 | ERROR    | app.evaluation:evaluate_source:244 - Error evaluating other: Unable to allocate 37.0 GiB for an array with shape (513, 1, 9675225) and data type float64
+2026-05-07 00:04:29.491 | INFO     | app.evaluation:evaluate_source:250 - vocals: SDR=42.60, SIR=inf, SAR=42.60
+2026-05-07 00:04:30.011 | INFO     | app.evaluation:evaluate_source:250 - drums: SDR=12.06, SIR=inf, SAR=12.06
+2026-05-07 00:04:30.541 | INFO     | app.evaluation:evaluate_source:250 - bass: SDR=309.14, SIR=inf, SAR=309.14
+2026-05-07 00:04:31.074 | INFO     | app.evaluation:evaluate_source:250 - other: SDR=98.80, SIR=inf, SAR=98.80

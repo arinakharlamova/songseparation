@@ -1,0 +1,57 @@
+2026-05-06 19:58:03.425 | INFO     | app.main:<module>:27 - Starting Source Separation API
+2026-05-06 19:58:24.606 | INFO     | app.main:<module>:27 - Starting Source Separation API
+2026-05-06 19:58:43.694 | INFO     | app.main:<module>:27 - Starting Source Separation API
+2026-05-06 19:58:43.763 | INFO     | app.main:startup_event:109 - API starting up...
+2026-05-06 19:58:43.763 | INFO     | app.main:startup_event:110 - Device: cpu
+2026-05-06 19:58:43.763 | INFO     | app.main:startup_event:111 - Model: htdemucs_ft
+2026-05-06 19:59:23.638 | INFO     | app.main:<module>:27 - Starting Source Separation API
+2026-05-06 19:59:23.679 | INFO     | app.main:startup_event:109 - API starting up...
+2026-05-06 19:59:23.679 | INFO     | app.main:startup_event:110 - Device: cpu
+2026-05-06 19:59:23.682 | INFO     | app.main:startup_event:111 - Model: htdemucs_ft
+2026-05-06 20:49:25.988 | INFO     | app.main:<module>:27 - Starting Source Separation API
+2026-05-06 20:50:10.322 | INFO     | app.main:<module>:28 - Starting Source Separation API
+2026-05-06 21:43:51 | INFO | API starting up...
+2026-05-06 21:43:51 | INFO | Device: cpu
+2026-05-06 21:43:51 | INFO | Model: htdemucs_ft
+2026-05-06 21:43:51 | INFO | Max file size: 100MB
+2026-05-06 21:43:51 | INFO | Max duration: 600s
+2026-05-06 21:47:43 | INFO | [45221d57] File valid: 44100Hz, 2ch, MPEG_LAYER_III
+2026-05-06 21:47:43 | INFO | [45221d57] Duration: 170.3s
+2026-05-06 21:47:43 | INFO | [45221d57] Starting separation...
+2026-05-06 21:47:43 | INFO | Initializing separator...
+2026-05-06 21:47:43 | INFO | SourceSeparator: model=htdemucs_ft, device=cpu
+2026-05-06 22:47:43 | WARNING | Timeout after 3600s, terminating process
+2026-05-06 23:52:34 | WARNING | vocals: Reference not found: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-13\test_evaluate_source_missing_f0\nonexistent\vocals.wav
+2026-05-06 23:52:34 | INFO | vocals: SDR=10.00, SIR=15.00, SAR=12.00
+2026-05-06 23:52:34 | INFO | vocals: SDR=30.00, SIR=100.00, SAR=65.00
+2026-05-06 23:52:34 | INFO | SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 23:52:34 | INFO | SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 23:52:34 | INFO | SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 23:52:34 | INFO | Starting separation: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-13\test_separate_mock0\test_track.wav
+2026-05-06 23:52:34 | INFO | Loading Demucs model: htdemucs
+2026-05-06 23:52:34 | INFO | Model loaded successfully
+2026-05-06 23:52:34 | INFO | Loaded: torch.Size([2, 88200]), sr=44100
+2026-05-06 23:52:34 | INFO | Saved drums: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-13\test_separate_mock0\output\test_track\drums.wav
+2026-05-06 23:52:34 | INFO | Saved bass: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-13\test_separate_mock0\output\test_track\bass.wav
+2026-05-06 23:52:34 | INFO | Saved other: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-13\test_separate_mock0\output\test_track\other.wav
+2026-05-06 23:52:34 | INFO | Saved vocals: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-13\test_separate_mock0\output\test_track\vocals.wav
+2026-05-06 23:52:34 | INFO | SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 23:52:34 | INFO | SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 23:52:34 | WARNING | Timeout after 0.1s, terminating process
+2026-05-06 23:53:36 | WARNING | vocals: Reference not found: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-14\test_evaluate_source_missing_f0\nonexistent\vocals.wav
+2026-05-06 23:53:36 | INFO | vocals: SDR=10.00, SIR=15.00, SAR=12.00
+2026-05-06 23:53:37 | INFO | vocals: SDR=30.00, SIR=10.00, SAR=20.00
+2026-05-06 23:53:37 | INFO | SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 23:53:37 | INFO | SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 23:53:37 | INFO | SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 23:53:37 | INFO | Starting separation: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-14\test_separate_mock0\test_track.wav
+2026-05-06 23:53:37 | INFO | Loading Demucs model: htdemucs
+2026-05-06 23:53:37 | INFO | Model loaded successfully
+2026-05-06 23:53:37 | INFO | Loaded: torch.Size([2, 88200]), sr=44100
+2026-05-06 23:53:37 | INFO | Saved drums: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-14\test_separate_mock0\output\test_track\drums.wav
+2026-05-06 23:53:37 | INFO | Saved bass: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-14\test_separate_mock0\output\test_track\bass.wav
+2026-05-06 23:53:37 | INFO | Saved other: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-14\test_separate_mock0\output\test_track\other.wav
+2026-05-06 23:53:37 | INFO | Saved vocals: C:\Users\Arina\AppData\Local\Temp\pytest-of-Arina\pytest-14\test_separate_mock0\output\test_track\vocals.wav
+2026-05-06 23:53:37 | INFO | SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 23:53:37 | INFO | SourceSeparator: model=htdemucs, device=cpu
+2026-05-06 23:53:37 | WARNING | Timeout after 0.1s, terminating process

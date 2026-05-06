@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Source Separation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 2rem; }
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle { text-align: center; color: #888; margin-bottom: 2rem; }
+        
+        .upload-area {
+            border: 2px dashed #333;
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #111;
+        }
+        .upload-area:hover { border-color: #667eea; background: #151515; }
+        .upload-area.dragover { border-color: #764ba2; background: #1a1a2e; }
+        
+        .upload-icon { font-size: 3rem; margin-bottom: 1rem; }
+        .upload-text { font-size: 1.1rem; color: #aaa; }
+        
+        #file-input { display: none; }
+        
+        .progress-container {
+            margin-top: 1.5rem;
+            display: none;
+        }
+        .progress-bar {
+            height: 6px;
+            background: #222;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .stems-container {
+            margin-top: 2rem;
+            display: none;
+        }
+        .stem-card {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .stem-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        .stem-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .stem-actions { display: flex; gap: 0.5rem; }
+        
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        button:hover { background: #5a6fd6; }
+        button:disabled { background: #333; cursor: not-allowed; }
+        
+        audio {
+            width: 100%;
+            height: 40px;
+            margin-top: 0.5rem;
+        }
+        
+        .info-box {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+        .info-box strong { color: #e0e0e0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Music Source Separation</h1>
+        <p class="subtitle">Separate any track into vocals, drums, bass, and other instruments</p>
+        
+        <div class="upload-area" id="upload-area">
+            <div class="upload-icon">🎵</div>
+            <div class="upload-text">Drop your audio file here or click to browse</div>
+            <div style="color: #666; font-size: 0.85rem; margin-top: 0.5rem;">
+                Supports: WAV, MP3, FLAC, OGG, M4A (max 100MB)
+            </div>
+        </div>
+        <input type="file" id="file-input" accept=".wav,.mp3,.flac,.ogg,.m4a">
+        
+        <div class="progress-container" id="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-text" id="progress-text">Processing...</div>
+        </div>
+        
+        <div class="stems-container" id="stems-container">
+            <h2 style="margin-bottom: 1rem;">Separated Stems</h2>
+            <div id="stems-list"></div>
+            <div class="info-box" id="info-box"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = window.location.origin;
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const progressContainer = document.getElementById('progress-container');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const stemsContainer = document.getElementById('stems-container');
+        const stemsList = document.getElementById('stems-list');
+        const infoBox = document.getElementById('info-box');
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file) uploadFile(file);
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) uploadFile(file);
+        });
+
+        async function uploadFile(file) {
+            progressContainer.style.display = 'block';
+            stemsContainer.style.display = 'none';
+            progressFill.style.width = '0%';
+            progressText.textContent = 'Uploading...';
+            
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('return_zip', 'false');
+            
+            try {
+                const xhr = new XMLHttpRequest();
+                
+                xhr.upload.addEventListener('progress', (e) => {
+                    if (e.lengthComputable) {
+                        const pct = (e.loaded / e.total) * 100;
+                        progressFill.style.width = pct + '%';
+                    }
+                });
+                
+                xhr.addEventListener('load', () => {
+                    if (xhr.status === 200) {
+                        progressFill.style.width = '100%';
+                        progressText.textContent = 'Complete!';
+                        const result = JSON.parse(xhr.responseText);
+                        displayStems(result);
+                    } else {
+                        const error = JSON.parse(xhr.responseText);
+                        progressText.textContent = 'Error: ' + (error.detail || error.error);
+                        progressFill.style.background = '#e74c3c';
+                    }
+                });
+                
+                xhr.open('POST', API_URL + '/separate');
+                xhr.send(formData);
+                
+                progressText.textContent = 'Separating audio... (this may take 1-2 minutes)';
+                progressFill.style.width = '20%';
+                
+                // Simulate progress during processing
+                let progress = 20;
+                const interval = setInterval(() => {
+                    if (progress < 90) {
+                        progress += 5;
+                        progressFill.style.width = progress + '%';
+                    }
+                }, 3000);
+                
+                xhr.addEventListener('loadend', () => clearInterval(interval));
+                
+            } catch (error) {
+                progressText.textContent = 'Error: ' + error.message;
+                progressFill.style.background = '#e74c3c';
+            }
+        }
+
+        function displayStems(result) {
+            stemsContainer.style.display = 'block';
+            stemsList.innerHTML = '';
+            
+            const stems = result.stems || {};
+            const icons = {
+                vocals: '🎤',
+                drums: '🥁',
+                bass: '🎸',
+                other: '🎵'
+            };
+            
+            for (const [name, url] of Object.entries(stems)) {
+                const card = document.createElement('div');
+                card.className = 'stem-card';
+                card.innerHTML = `
+                    <div class="stem-header">
+                        <span class="stem-name">${icons[name] || '🎵'} ${name.charAt(0).toUpperCase() + name.slice(1)}</span>
+                        <div class="stem-actions">
+                            <button onclick="downloadStem('${url}')">Download</button>
+                        </div>
+                    </div>
+                    <audio controls src="${API_URL}${url}"></audio>
+                `;
+                stemsList.appendChild(card);
+            }
+            
+            infoBox.innerHTML = `
+                <strong>Task ID:</strong> ${result.task_id}<br>
+                <strong>Duration:</strong> ${result.duration.toFixed(1)}s<br>
+                <strong>Status:</strong> ${result.status}
+            `;
+        }
+
+        function downloadStem(url) {
+            const a = document.createElement('a');
+            a.href = API_URL + url;
+            a.download = url.split('/').pop();
+            a.click();
+        }
+    </script>
+</body>
+</html>
