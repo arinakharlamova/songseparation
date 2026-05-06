@@ -1,6 +1,6 @@
 """
-FastAPI application for source separation service.
-Production-ready with security, validation, and observability.
+Приложение FastAPI для сервиса разделения аудио.
+Готово к production: безопасность, валидация, наблюдаемость.
 """
 import gc
 import re
@@ -14,6 +14,7 @@ from typing import Optional
 
 import aiofiles
 import fastapi
+import soundfile as sf
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse, HTMLResponse
@@ -27,7 +28,7 @@ from app.separator import SourceSeparator
 from app.utils import compute_file_hash, create_stem_archive, validate_audio_format
 
 # ---------------------------------------------------------------------------
-# Logging
+# Настройка логирования
 # ---------------------------------------------------------------------------
 logger.remove()
 logger.add(
@@ -43,7 +44,7 @@ logger.add(
 )
 
 # ---------------------------------------------------------------------------
-# Pydantic models (OpenAPI schemas)
+# Pydantic модели (схемы OpenAPI)
 # ---------------------------------------------------------------------------
 class SeparationResponse(BaseModel):
     task_id: str
@@ -75,7 +76,7 @@ class ModelsResponse(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Auth
+# Аутентификация
 # ---------------------------------------------------------------------------
 api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
 
@@ -88,7 +89,7 @@ async def verify_api_key(api_key: Optional[str] = Depends(api_key_header)):
 
 
 # ---------------------------------------------------------------------------
-# Rate limiter (simple in-memory)
+# Ограничитель частоты запросов (простой, в памяти)
 # ---------------------------------------------------------------------------
 _rate_limit_store: dict[str, list[float]] = defaultdict(list)
 
@@ -106,7 +107,7 @@ def check_rate_limit(client_ip: str) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# Filename sanitization
+# Очистка имён файлов от небезопасных символов
 # ---------------------------------------------------------------------------
 def sanitize_filename(name: str) -> str:
     name = re.sub(r"[^\w.\-]", "_", name)
@@ -115,7 +116,7 @@ def sanitize_filename(name: str) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Lifespan
+# Жизненный цикл приложения
 # ---------------------------------------------------------------------------
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -202,7 +203,7 @@ def get_separator() -> SourceSeparator:
 
 
 # ---------------------------------------------------------------------------
-# Middleware: client IP for rate limiting
+# Промежуточное ПО: определение IP клиента для ограничения частоты
 # ---------------------------------------------------------------------------
 @app.middleware("http")
 async def rate_limit_middleware(request, call_next):
@@ -216,7 +217,7 @@ async def rate_limit_middleware(request, call_next):
 
 
 # ---------------------------------------------------------------------------
-# Endpoints
+# Эндпоинты
 # ---------------------------------------------------------------------------
 @app.get("/", response_class=HTMLResponse)
 async def root_ui():
@@ -370,11 +371,20 @@ async def download_file(filename: str):
 
     output_root = Path(settings.output_dir).resolve()
 
+    # Search in output root and all subdirectories (for track subfolders)
     search_paths = [
-        output_root / safe,
-        Path(settings.cache_dir).resolve() / safe,
-        Path(settings.temp_dir).resolve() / safe,
+        output_root / safe,  # Direct file
     ]
+
+    # Also search in subdirectories (track folders)
+    if output_root.exists():
+        for subdir in output_root.iterdir():
+            if subdir.is_dir():
+                search_paths.append(subdir / safe)
+
+    # Also check cache and temp dirs
+    search_paths.append(Path(settings.cache_dir).resolve() / safe)
+    search_paths.append(Path(settings.temp_dir).resolve() / safe)
 
     for path in search_paths:
         # Ensure resolved path is inside output root

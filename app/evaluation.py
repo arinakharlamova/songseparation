@@ -1,8 +1,52 @@
-"""Evaluation module for source separation quality.
+"""Модуль оценки качества разделения источников.
 
-Unified module combining metrics, evaluation, and CLI tools.
-Calculates SDR, SIR, SAR metrics using museval or mir_eval.
+Объединяет метрики, оценку и инструменты командной строки.
+Считает метрики SDR, SIR, SAR с использованием museval или mir_eval.
 """
+import json
+import time
+from pathlib import Path
+from typing import Optional
+
+import numpy as np
+import soundfile as sf
+from loguru import logger
+
+try:
+    import museval
+    HAS_MUSEVAL = True
+except ImportError:
+    HAS_MUSEVAL = False
+    logger.warning("museval недоступен")
+
+try:
+    import mir_eval
+    HAS_MIR_EVAL = True
+except ImportError:
+    HAS_MIR_EVAL = False
+    logger.warning("mir_eval недоступен")
+
+try:
+    import librosa
+    HAS_LIBROSA = True
+except ImportError:
+    HAS_LIBROSA = False
+    logger.warning("librosa недоступен для ресемплинга")
+
+STEM_NAMES = ["вокал", "барабаны", "бас", "прочее"]
+
+
+def resample_audio(data: np.ndarray, orig_sr: int, target_sr: int) -> np.ndarray:
+    """Ресемплинг аудио до целевой частоты дискретизации.
+    
+    Аргументы:
+        data: Аудиоданные формы (сэмплы, каналы) или (сэмплы,)
+        orig_sr: Исходная частота дискретизации
+        target_sr: Целевая частота дискретизации
+    
+    Возвращает:
+        Ресемплированное аудио в том же формате
+    """
 import json
 import time
 from pathlib import Path
@@ -65,7 +109,7 @@ def resample_audio(data: np.ndarray, orig_sr: int, target_sr: int) -> np.ndarray
 
 
 def load_audio_pair(ref_path: Path, est_path: Path, target_sr: int = 44100):
-    """Load and align reference and estimated audio files."""
+    """Загрузить и синхронизировать эталонные и оценочные аудиофайлы."""
     if not ref_path.exists():
         raise FileNotFoundError(f"Reference not found: {ref_path}")
     if not est_path.exists():
@@ -97,20 +141,20 @@ def load_audio_pair(ref_path: Path, est_path: Path, target_sr: int = 44100):
 
 
 def calculate_metrics_museval(ref_data: np.ndarray, est_data: np.ndarray, sample_rate: int) -> dict[str, float]:
-    """Calculate SDR, SIR, SAR using museval.
+    """Рассчитать SDR, SIR, SAR с использованием museval.
 
-    Note: museval can be memory-intensive for long audio.
-    Uses smaller window size to avoid memory issues.
+    Примечание: museval может требовать много памяти для длинного аудио.
+    Используется меньший размер окна для избежания проблем с памятью.
     """
     if not HAS_MUSEVAL:
         raise RuntimeError("museval not installed")
 
-    # museval expects (n_windows, n_channels, n_sources)
-    # For single source evaluation: shape should be (1, n_channels, n_samples)
-    ref_3d = ref_data.T[np.newaxis, ...]  # (1, channels, samples)
+    # museval ожидает (n_windows, n_channels, n_sources)
+    # Для оценки одного источника: форма должна быть (1, n_channels, n_samples)
+    ref_3d = ref_data.T[np.newaxis, ...]  # (1, каналы, сэмплы)
     est_3d = est_data.T[np.newaxis, ...]
 
-    # Use smaller window to avoid memory issues (4096 samples ~ 93ms at 44100 Hz)
+    # Используем меньший размер окна для избежания проблем с памятью (4096 сэмплов ~ 93мс при 44100 Гц)
     win_size = 4096
     hop_size = 2048
 
@@ -122,7 +166,7 @@ def calculate_metrics_museval(ref_data: np.ndarray, est_data: np.ndarray, sample
             hop=hop_size,
         )
     except (TypeError, ValueError):
-        # Try with sample_rate parameter (older API)
+        # Пробуем с параметром sample_rate (старый API)
         try:
             scores = museval.evaluate(
                 references=ref_3d,
@@ -132,7 +176,7 @@ def calculate_metrics_museval(ref_data: np.ndarray, est_data: np.ndarray, sample
                 hop=hop_size,
             )
         except Exception:
-            # Fallback to simple metrics if museval completely fails
+            # Запасной вариант: упрощённые метрики, если museval полностью не работает
             return calculate_simple_metrics(ref_data, est_data)
 
     return {
@@ -143,15 +187,15 @@ def calculate_metrics_museval(ref_data: np.ndarray, est_data: np.ndarray, sample
 
 
 def calculate_metrics_mir_eval(ref_data: np.ndarray, est_data: np.ndarray) -> dict[str, float]:
-    """Calculate SDR, SIR, SAR using mir_eval."""
+    """Рассчитать SDR, SIR, SAR с использованием mir_eval."""
     if not HAS_MIR_EVAL:
-        raise RuntimeError("mir_eval not installed")
+        raise RuntimeError("mir_eval не установлен")
 
-    # Convert to (nsrc, nsampl) format
+    # Преобразование в формат (n_sources, n_samples)
     ref_array = ref_data.T  # (channels, samples) -> (samples, channels)
     est_array = est_data.T
 
-    # Average to mono for mir_eval
+    # Усреднение до моно для mir_eval
     if ref_array.ndim == 2:
         ref_mono = np.mean(ref_array, axis=1)
     else:
@@ -161,7 +205,7 @@ def calculate_metrics_mir_eval(ref_data: np.ndarray, est_data: np.ndarray) -> di
     else:
         est_mono = est_array
 
-    ref_mono = ref_mono[np.newaxis, :]  # (1, nsampl)
+    ref_mono = ref_mono[np.newaxis, :]  # (1, n_samples)
     est_mono = est_mono[np.newaxis, :]
 
     sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(ref_mono, est_mono)
@@ -174,11 +218,11 @@ def calculate_metrics_mir_eval(ref_data: np.ndarray, est_data: np.ndarray) -> di
 
 
 def calculate_simple_metrics(ref_data: np.ndarray, est_data: np.ndarray) -> dict[str, float]:
-    """Calculate simplified quality metrics without external libraries."""
+    """Рассчитать упрощённые метрики качества без внешних библиотек."""
     ref = ref_data
     est = est_data
 
-    # Ensure same length
+    # Обеспечение одинаковой длины
     min_len = min(ref.shape[-1] if ref.ndim > 1 else len(ref),
                   est.shape[-1] if est.ndim > 1 else len(est))
     if ref.ndim > 1:
@@ -190,34 +234,34 @@ def calculate_simple_metrics(ref_data: np.ndarray, est_data: np.ndarray) -> dict
     else:
         est = est[:min_len]
 
-    # Flatten to mono
+    # Преобразование в моно
     if ref.ndim > 1:
         ref = np.mean(ref, axis=1)
     if est.ndim > 1:
         est = np.mean(est, axis=1)
 
-    # Compute energy
+    # Расчёт энергии
     ref_energy = np.mean(ref ** 2)
     est_energy = np.mean(est ** 2)
 
-    # Error
+    # Ошибка
     error = est - ref
     error_energy = np.mean(error ** 2)
 
-    # SNR as proxy for SDR
+    # SNR как приближение для SDR
     if error_energy > 1e-10:
         sdr = 10 * np.log10(max(ref_energy, 1e-10) / max(error_energy, 1e-10))
     else:
         sdr = 30.0
 
-    # Correlation as proxy for SIR
+    # Корреляция как приближение для SIR
     corr = np.corrcoef(ref, est)[0, 1]
     if np.isnan(corr):
         sir = 10.0
     else:
         sir = -10 * np.log10(max(1e-10, 1 - corr ** 2))
 
-    # SAR as average of SDR and SIR
+    # SAR как среднее между SDR и SIR
     sar = (sdr + sir) / 2
 
     return {"SDR": float(sdr), "SIR": float(sir), "SAR": float(sar)}
@@ -229,7 +273,7 @@ def evaluate_source(
     source_name: str,
     prefer_mir_eval: bool = True,
 ) -> dict[str, float]:
-    """Evaluate a single source (vocals, drums, etc.)."""
+    """Оценить один источник (вокал, барабаны и т.д.)."""
     try:
         ref_data, est_data, sr = load_audio_pair(ref_path, est_path)
     except FileNotFoundError as e:
@@ -237,13 +281,13 @@ def evaluate_source(
         return {"SDR": 0.0, "SIR": 0.0, "SAR": 0.0}
 
     try:
-        # Try mir_eval first (more memory-efficient)
+        # Сначала пробуем mir_eval (более эффективен по памяти)
         if prefer_mir_eval and HAS_MIR_EVAL:
             metrics = calculate_metrics_mir_eval(ref_data, est_data)
-        # Then try museval with fixed parameters
+        # Затем пробуем museval с исправленными параметрами
         elif HAS_MUSEVAL:
             metrics = calculate_metrics_museval(ref_data, est_data, sr)
-        # Fallback to simple metrics
+        # Запасной вариант: упрощённые метрики
         else:
             metrics = calculate_simple_metrics(ref_data, est_data)
 
@@ -254,8 +298,8 @@ def evaluate_source(
         return metrics
 
     except Exception as e:
-        logger.error(f"Error evaluating {source_name}: {e}")
-        # Final fallback to simple metrics
+        logger.error(f"Ошибка оценки {source_name}: {e}")
+        # Финальный запасной вариант: упрощённые метрики
         try:
             return calculate_simple_metrics(ref_data, est_data)
         except Exception:
@@ -268,7 +312,7 @@ def evaluate_track(
     sources: Optional[list[str]] = None,
     prefer_mir_eval: bool = True,
 ) -> dict[str, dict[str, float]]:
-    """Evaluate all sources for one track."""
+    """Оценить все источники для одного трека."""
     if sources is None:
         sources = STEM_NAMES
 
@@ -281,6 +325,25 @@ def evaluate_track(
     return results
 
 
+def print_results_table(aggregated: dict):
+    """Вывести отформатированную таблицу результатов."""
+    print("\n" + "=" * 70)
+    print("РЕЗУЛЬТАТЫ ОЦЕНКИ")
+    print("=" * 70)
+
+    header = f"{'Источник':<12} | {'SDR (дБ)':>10} | {'SIR (дБ)':>10} | {'SAR (дБ)':>10}"
+    print(header)
+    print("-" * 70)
+
+    for source, metrics in aggregated.items():
+        sdr = metrics["SDR"]["mean"]
+        sir = metrics["SIR"]["mean"]
+        sar = metrics["SAR"]["mean"]
+        print(f"{source:<12} | {sdr:>10.2f} | {sir:>10.2f} | {sar:>10.2f}")
+
+    print("=" * 70)
+
+
 def evaluate_dataset(
     ref_root: Path,
     est_root: Path,
@@ -288,7 +351,7 @@ def evaluate_dataset(
     sources: Optional[list[str]] = None,
     prefer_mir_eval: bool = True,
 ) -> dict[str, dict[str, dict[str, float]]]:
-    """Evaluate multiple tracks and return per-track results."""
+    """Оценить несколько треков и вернуть результаты по каждому треку."""
     if track_names is None:
         track_names = sorted([d.name for d in ref_root.iterdir() if d.is_dir()])
 
@@ -318,7 +381,7 @@ def evaluate_dataset(
 def aggregate_results(
     results: dict[str, dict[str, dict[str, float]]]
 ) -> dict[str, dict[str, float]]:
-    """Aggregate metrics across all tracks."""
+    """Агрегировать метрики по всем трекам."""
     sources = STEM_NAMES
     metrics = ["SDR", "SIR", "SAR"]
 
@@ -380,7 +443,7 @@ def run_full_evaluation(
     track_names: Optional[list[str]] = None,
     prefer_mir_eval: bool = True,
 ) -> dict:
-    """Run full evaluation pipeline and save results."""
+    """Запустить полный пайплайн оценки и сохранить результаты."""
     ref_root = Path(ref_root)
     est_root = Path(est_root)
 
@@ -415,7 +478,7 @@ def separate_and_evaluate(
     track_names: Optional[list[str]] = None,
     prefer_mir_eval: bool = True,
 ) -> dict:
-    """Separate tracks using Demucs and then evaluate them."""
+    """Разделить треки с помощью Demucs, затем оценить их."""
     from demucs.pretrained import get_model
     from demucs.apply import apply_model
     import torch

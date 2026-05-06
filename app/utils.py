@@ -1,5 +1,5 @@
 """
-Utility functions for audio processing.
+Вспомогательные функции для обработки аудио.
 """
 import hashlib
 import io
@@ -14,7 +14,7 @@ import torch
 
 def compute_file_hash(file_path: Path, chunk_size: int = 8192) -> str:
     """
-    Compute MD5 hash of file for caching.
+    Вычислить MD5-хэш файла для кэширования.
     """
     md5 = hashlib.md5()
     with open(file_path, "rb") as f:
@@ -29,7 +29,7 @@ def remove_silence(
     frame_length: int = 512,
 ) -> torch.Tensor:
     """
-    Remove silence from beginning and end of audio.
+    Удалить тишину из начала и конца аудио.
     """
     waveform = waveform.cpu()
 
@@ -69,7 +69,7 @@ def trim_to_duration(
     sample_rate: int = 44100,
 ) -> torch.Tensor:
     """
-    Trim audio to specified duration.
+    Обрезать аудио до указанной длительности.
     """
     max_samples = int(duration_seconds * sample_rate)
     if waveform.shape[-1] > max_samples:
@@ -83,7 +83,7 @@ def load_audio(
     normalize: bool = True,
 ) -> tuple[torch.Tensor, int]:
     """
-    Load audio file with optional normalization.
+    Загрузить аудиофайл с опциональной нормализацией.
     """
     data, sr = sf.read(str(file_path), dtype="float32")
     if data.ndim == 1:
@@ -110,7 +110,7 @@ def save_audio(
     format: Optional[str] = None,
 ) -> None:
     """
-    Save audio to file.
+    Сохранить аудио в файл.
     """
     data = waveform.cpu().numpy().T
     subtype = "PCM_16" if bit_depth == 16 else "PCM_24"
@@ -118,7 +118,7 @@ def save_audio(
 
 
 def _resample(waveform: torch.Tensor, orig_sr: int, target_sr: int) -> torch.Tensor:
-    """Simple resampling using numpy interpolation."""
+    """Простой ресемплинг с использованием интерполяции numpy."""
     if orig_sr == target_sr:
         return waveform
 
@@ -141,7 +141,7 @@ def _resample(waveform: torch.Tensor, orig_sr: int, target_sr: int) -> torch.Ten
 
 def create_stem_archive(stems_dir: Path, archive_path: Optional[Path] = None) -> Path:
     """
-    Create ZIP archive from separated stems.
+    Создать ZIP-архив из разделённых стемов.
     """
     if archive_path is None:
         archive_path = stems_dir.parent / f"{stems_dir.stem}.zip"
@@ -155,16 +155,16 @@ def create_stem_archive(stems_dir: Path, archive_path: Optional[Path] = None) ->
 
 def validate_audio_format(file_path: Path) -> tuple[bool, str]:
     """
-    Validate audio file format.
+    Проверить формат аудиофайла.
     """
     valid_extensions = {".wav", ".mp3", ".flac", ".ogg", ".m4a"}
     suffix = file_path.suffix.lower()
 
     if suffix not in valid_extensions:
-        return False, f"Unsupported format. Supported: {', '.join(sorted(valid_extensions))}"
+        return False, f"Неподдерживаемый формат. Поддерживается: {', '.join(sorted(valid_extensions))}"
 
     try:
         info = sf.info(str(file_path))
-        return True, f"{info.samplerate}Hz, {info.channels}ch, {info.subtype}"
+        return True, f"{info.samplerate}Гц, {info.channels}кан, {info.subtype}"
     except Exception as e:
-        return False, f"Cannot read audio: {e}"
+        return False, f"Не удаётся прочитать аудио: {e}"
