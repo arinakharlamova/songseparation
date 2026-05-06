@@ -55,3 +55,82 @@
 2026-05-06 23:53:37 | INFO | SourceSeparator: model=htdemucs, device=cpu
 2026-05-06 23:53:37 | INFO | SourceSeparator: model=htdemucs, device=cpu
 2026-05-06 23:53:37 | WARNING | Timeout after 0.1s, terminating process
+2026-05-07 00:47:49 | INFO | API starting up...
+2026-05-07 00:47:49 | INFO | Device: cpu
+2026-05-07 00:47:49 | INFO | Model: htdemucs_ft
+2026-05-07 00:47:49 | INFO | Max file size: 100MB
+2026-05-07 00:47:49 | INFO | Max duration: 600s
+2026-05-07 00:49:06 | INFO | [028c3319] File valid: 44100Гц, 2кан, MPEG_LAYER_III
+2026-05-07 00:49:06 | ERROR | [028c3319] Unexpected error: name 'sf' is not defined
+2026-05-07 00:50:46 | INFO | API shutting down...
+2026-05-07 00:50:53 | INFO | API starting up...
+2026-05-07 00:50:53 | INFO | Device: cpu
+2026-05-07 00:50:53 | INFO | Model: htdemucs_ft
+2026-05-07 00:50:53 | INFO | Max file size: 100MB
+2026-05-07 00:50:53 | INFO | Max duration: 600s
+2026-05-07 00:51:23 | INFO | API shutting down...
+2026-05-07 00:51:46 | INFO | API starting up...
+2026-05-07 00:51:46 | INFO | Device: cpu
+2026-05-07 00:51:46 | INFO | Model: htdemucs_ft
+2026-05-07 00:51:46 | INFO | Max file size: 100MB
+2026-05-07 00:51:46 | INFO | Max duration: 600s
+2026-05-07 00:51:50 | INFO | [a213db7e] File valid: 44100Гц, 2кан, MPEG_LAYER_III
+2026-05-07 00:51:50 | INFO | [a213db7e] Duration: 351.7s
+2026-05-07 00:51:50 | INFO | [a213db7e] Starting separation...
+2026-05-07 00:51:50 | INFO | Initializing separator...
+2026-05-07 00:51:50 | INFO | SourceSeparator: model=htdemucs_ft, device=cpu
+2026-05-07 00:58:46 | ERROR | [a213db7e] Separation error: Процесс разделения завершился без результата
+2026-05-07 01:00:02 | INFO | API starting up...
+2026-05-07 01:00:02 | INFO | Device: cpu
+2026-05-07 01:00:02 | INFO | Model: htdemucs_ft
+2026-05-07 01:00:02 | INFO | Max file size: 100MB
+2026-05-07 01:00:02 | INFO | Max duration: 600s
+2026-05-07 01:00:33 | INFO | [29cf7aab] File valid: 44100Гц, 2кан, MPEG_LAYER_III
+2026-05-07 01:00:33 | INFO | [29cf7aab] Duration: 351.7s
+2026-05-07 01:00:34 | INFO | [29cf7aab] Starting separation...
+2026-05-07 01:00:34 | INFO | Initializing separator...
+2026-05-07 01:00:34 | INFO | SourceSeparator: model=htdemucs_ft, device=cpu
+2026-05-07 01:03:02 | ERROR | [29cf7aab] Separation error: Процесс разделения завершился без результата
+2026-05-07 01:03:28 | INFO | API starting up...
+2026-05-07 01:03:28 | INFO | Device: cpu
+2026-05-07 01:03:28 | INFO | Model: htdemucs_ft
+2026-05-07 01:03:28 | INFO | Max file size: 100MB
+2026-05-07 01:03:28 | INFO | Max duration: 600s
+2026-05-07 01:03:49 | INFO | [1cc26ddf] File valid: 44100Гц, 2кан, MPEG_LAYER_III
+2026-05-07 01:03:49 | INFO | [1cc26ddf] Duration: 351.7s
+2026-05-07 01:03:49 | INFO | [1cc26ddf] Starting separation...
+2026-05-07 01:03:49 | INFO | Initializing separator...
+2026-05-07 01:03:49 | INFO | SourceSeparator: model=htdemucs_ft, device=cpu
+2026-05-07 01:15:50 | ERROR | [1cc26ddf] Separation error: Процесс разделения завершился без результата
+2026-05-07 01:15:55 | INFO | API shutting down...
+2026-05-07 01:17:27 | INFO | API starting up...
+2026-05-07 01:17:27 | INFO | Device: cpu
+2026-05-07 01:17:27 | INFO | Model: htdemucs
+2026-05-07 01:17:27 | INFO | Max file size: 100MB
+2026-05-07 01:17:27 | INFO | Max duration: 600s
+2026-05-07 01:17:56 | INFO | [4ed1bad8] File valid: 44100Гц, 2кан, MPEG_LAYER_III
+2026-05-07 01:17:56 | INFO | [4ed1bad8] Duration: 351.7s
+2026-05-07 01:17:56 | INFO | [4ed1bad8] Starting separation...
+2026-05-07 01:17:56 | INFO | Initializing separator...
+2026-05-07 01:17:56 | INFO | SourceSeparator: model=htdemucs, device=cpu
+2026-05-07 01:23:30 | INFO | API shutting down...
+2026-05-07 01:33:19 | INFO | API starting up...
+2026-05-07 01:33:19 | INFO | Device: cpu
+2026-05-07 01:33:19 | INFO | Model: htdemucs
+2026-05-07 01:33:19 | INFO | Max file size: 100MB
+2026-05-07 01:33:19 | INFO | Max duration: 600s
+2026-05-07 01:33:35 | INFO | [6f52f5f2] File valid: 44100Гц, 2кан, MPEG_LAYER_III
+2026-05-07 01:33:35 | INFO | [6f52f5f2] Duration: 351.7s
+2026-05-07 01:33:35 | INFO | [6f52f5f2] Cache hit: 1ad775bf
+2026-05-07 01:34:57 | INFO | [e64b3ae9] File valid: 44100Гц, 2кан, MPEG_LAYER_III
+2026-05-07 01:34:57 | INFO | [e64b3ae9] Duration: 351.7s
+2026-05-07 01:34:57 | INFO | [e64b3ae9] Cache hit: 1ad775bf
+2026-05-07 01:38:05 | INFO | API shutting down...
+2026-05-07 01:38:31 | INFO | API starting up...
+2026-05-07 01:38:31 | INFO | Device: cpu
+2026-05-07 01:38:31 | INFO | Model: htdemucs
+2026-05-07 01:38:31 | INFO | Max file size: 100MB
+2026-05-07 01:38:31 | INFO | Max duration: 600s
+2026-05-07 01:38:42 | INFO | [869b494e] File valid: 44100Гц, 2кан, MPEG_LAYER_III
+2026-05-07 01:38:42 | INFO | [869b494e] Duration: 351.7s
+2026-05-07 01:38:43 | INFO | [869b494e] Cache hit: 1ad775bf

@@ -181,3 +181,33 @@
 2026-05-07 00:04:30.011 | INFO     | app.evaluation:evaluate_source:250 - drums: SDR=12.06, SIR=inf, SAR=12.06
 2026-05-07 00:04:30.541 | INFO     | app.evaluation:evaluate_source:250 - bass: SDR=309.14, SIR=inf, SAR=309.14
 2026-05-07 00:04:31.074 | INFO     | app.evaluation:evaluate_source:250 - other: SDR=98.80, SIR=inf, SAR=98.80
+2026-05-07 00:51:57.359 | INFO     | app.separator:_separation_worker:50 - [Worker] Загрузка модели: htdemucs_ft
+2026-05-07 01:00:40.383 | INFO     | app.separator:_separation_worker:50 - [Worker] Загрузка модели: htdemucs_ft
+2026-05-07 01:03:55.717 | INFO     | app.separator:_separation_worker:50 - [Worker] Загрузка модели: htdemucs_ft
+2026-05-07 01:04:30.656 | INFO     | app.separator:_separation_worker:61 - [Worker] Загружено: torch.Size([2, 15508847]), sr=44100
+2026-05-07 01:18:02.730 | INFO     | app.separator:_separation_worker:50 - [Worker] Загрузка модели: htdemucs
+2026-05-07 01:18:03.936 | INFO     | app.separator:_separation_worker:61 - [Worker] Загружено: torch.Size([2, 15508847]), sr=44100
+2026-05-07 01:32:06.016 | INFO     | __main__:__init__:60 - SourceSeparator: model=demucs, device=cpu
+2026-05-07 01:32:06.016 | INFO     | __main__:__init__:60 - SourceSeparator: model=demucs, device=cpu
+2026-05-07 01:32:06.017 | INFO     | __main__:separate:73 - Начало разделения: test_short.mp3
+2026-05-07 01:32:06.017 | INFO     | __main__:separate:73 - Начало разделения: test_short.mp3
+2026-05-07 01:32:06.019 | INFO     | __main__:_get_model:139 - Загрузка модели Demucs: demucs
+2026-05-07 01:32:06.019 | INFO     | __main__:_get_model:139 - Загрузка модели Demucs: demucs
+2026-05-07 01:32:31.370 | INFO     | __main__:__init__:60 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-07 01:32:31.370 | INFO     | __main__:__init__:60 - SourceSeparator: model=htdemucs, device=cpu
+2026-05-07 01:32:31.371 | INFO     | __main__:separate:73 - Начало разделения: test_short.mp3
+2026-05-07 01:32:31.371 | INFO     | __main__:separate:73 - Начало разделения: test_short.mp3
+2026-05-07 01:32:31.371 | INFO     | __main__:_get_model:139 - Загрузка модели Demucs: htdemucs
+2026-05-07 01:32:31.371 | INFO     | __main__:_get_model:139 - Загрузка модели Demucs: htdemucs
+2026-05-07 01:32:31.766 | INFO     | __main__:_get_model:144 - Модель успешно загружена
+2026-05-07 01:32:31.766 | INFO     | __main__:_get_model:144 - Модель успешно загружена
+2026-05-07 01:32:31.784 | INFO     | __main__:separate:83 - Загружено: torch.Size([2, 220500]), sr=44100
+2026-05-07 01:32:31.784 | INFO     | __main__:separate:83 - Загружено: torch.Size([2, 220500]), sr=44100
+2026-05-07 01:32:35.145 | INFO     | __main__:separate:101 - Сохранён drums: output\test_short\drums.wav
+2026-05-07 01:32:35.145 | INFO     | __main__:separate:101 - Сохранён drums: output\test_short\drums.wav
+2026-05-07 01:32:35.164 | INFO     | __main__:separate:101 - Сохранён bass: output\test_short\bass.wav
+2026-05-07 01:32:35.164 | INFO     | __main__:separate:101 - Сохранён bass: output\test_short\bass.wav
+2026-05-07 01:32:35.175 | INFO     | __main__:separate:101 - Сохранён other: output\test_short\other.wav
+2026-05-07 01:32:35.175 | INFO     | __main__:separate:101 - Сохранён other: output\test_short\other.wav
+2026-05-07 01:32:35.185 | INFO     | __main__:separate:101 - Сохранён vocals: output\test_short\vocals.wav
+2026-05-07 01:32:35.185 | INFO     | __main__:separate:101 - Сохранён vocals: output\test_short\vocals.wav
