@@ -6,10 +6,8 @@
 
 - **4-stem разделение**: вокал, барабаны, бас, остальное
 - **REST API** на FastAPI с OpenAPI документацией
-- **Web UI** для загрузки и прослушивания стемов
 - **Кэширование** результатов по хэшу файла
 - **Валидация** формата, размера и длительности
-- **Docker** контейнеризация с docker-compose
 - **Оценка качества** на MUSDB18 (SDR, SIR, SAR метрики)
 - **Безопасность**: API key, rate limiting, path traversal защита
 
@@ -32,20 +30,8 @@ pip install -r requirements.txt
 # Запуск API
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 
-# Открыть веб-интерфейс
-open http://localhost:8000
-
 # Или через CLI
 python -m app.separator path/to/track.mp3 -o output
-```
-
-### Docker
-
-```bash
-docker-compose up --build -d
-
-# Открыть веб-интерфейс
-open http://localhost:8000
 ```
 
 ## API Endpoints
@@ -135,23 +121,22 @@ songseparation/
 │   ├── config.py          # Pydantic Settings
 │   ├── main.py            # FastAPI приложение
 │   ├── separator.py       # Demucs engine
-│   ├── metrics.py         # SDR/SIR/SAR оценка
 │   ├── evaluation.py      # MUSDB18 evaluation pipeline
 │   ├── utils.py           # Audio утилиты
-│   └── static/
-│       └── index.html     # Web UI
-├── tests/
-│   ├── test_api.py        # API integration tests
-│   └── test_utils.py      # Unit tests
+│   └── __init__.py
 ├── notebooks/
-│   └── analysis.ipynb     # Jupyter анализ + спектрограммы
-├── output/                # Результаты разделения
-├── Dockerfile
-├── docker-compose.yml
-├── .env
+│   └── analysis_final.ipynb     # Jupyter анализ + спектрограммы
+├── data/
+│   └── test/             # Тестовые аудиофайлы
+│       └── sample.mp3
+├── output/
+│   └── sample/          # Результаты разделения (4 WAV)
+│       ├── vocals.wav
+│       ├── drums.wav
+│       ├── bass.wav
+│       └── other.wav
 ├── requirements.txt
-├── README.md
-└── RESULTS.md
+└── README.md
 ```
 
 ## Оптимизации
