@@ -17,50 +17,6 @@ try:
     HAS_MUSEVAL = True
 except ImportError:
     HAS_MUSEVAL = False
-    logger.warning("museval недоступен")
-
-try:
-    import mir_eval
-    HAS_MIR_EVAL = True
-except ImportError:
-    HAS_MIR_EVAL = False
-    logger.warning("mir_eval недоступен")
-
-try:
-    import librosa
-    HAS_LIBROSA = True
-except ImportError:
-    HAS_LIBROSA = False
-    logger.warning("librosa недоступен для ресемплинга")
-
-STEM_NAMES = ["вокал", "барабаны", "бас", "прочее"]
-
-
-def resample_audio(data: np.ndarray, orig_sr: int, target_sr: int) -> np.ndarray:
-    """Ресемплинг аудио до целевой частоты дискретизации.
-    
-    Аргументы:
-        data: Аудиоданные формы (сэмплы, каналы) или (сэмплы,)
-        orig_sr: Исходная частота дискретизации
-        target_sr: Целевая частота дискретизации
-    
-    Возвращает:
-        Ресемплированное аудио в том же формате
-    """
-import json
-import time
-from pathlib import Path
-from typing import Optional
-
-import numpy as np
-import soundfile as sf
-from loguru import logger
-
-try:
-    import museval
-    HAS_MUSEVAL = True
-except ImportError:
-    HAS_MUSEVAL = False
     logger.warning("museval not available")
 
 try:
@@ -323,25 +279,6 @@ def evaluate_track(
         results[source] = evaluate_source(ref_path, est_path, source, prefer_mir_eval)
 
     return results
-
-
-def print_results_table(aggregated: dict):
-    """Вывести отформатированную таблицу результатов."""
-    print("\n" + "=" * 70)
-    print("РЕЗУЛЬТАТЫ ОЦЕНКИ")
-    print("=" * 70)
-
-    header = f"{'Источник':<12} | {'SDR (дБ)':>10} | {'SIR (дБ)':>10} | {'SAR (дБ)':>10}"
-    print(header)
-    print("-" * 70)
-
-    for source, metrics in aggregated.items():
-        sdr = metrics["SDR"]["mean"]
-        sir = metrics["SIR"]["mean"]
-        sar = metrics["SAR"]["mean"]
-        print(f"{source:<12} | {sdr:>10.2f} | {sir:>10.2f} | {sar:>10.2f}")
-
-    print("=" * 70)
 
 
 def evaluate_dataset(

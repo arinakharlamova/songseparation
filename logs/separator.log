@@ -211,3 +211,22 @@
 2026-05-07 01:32:35.175 | INFO     | __main__:separate:101 - Сохранён other: output\test_short\other.wav
 2026-05-07 01:32:35.185 | INFO     | __main__:separate:101 - Сохранён vocals: output\test_short\vocals.wav
 2026-05-07 01:32:35.185 | INFO     | __main__:separate:101 - Сохранён vocals: output\test_short\vocals.wav
+2026-05-07 12:24:30.370 | INFO     | app.separator:__init__:60 - SourceSeparator: model=htdemucs_ft, device=cpu
+2026-05-07 12:24:30.370 | INFO     | app.separator:separate:73 - Начало разделения: C:/Users/Arina/Downloads/Lana_Del_Rey_-_Brooklyn_Baby_47966472.mp3
+2026-05-07 12:24:30.371 | INFO     | app.separator:_get_model:139 - Загрузка модели Demucs: htdemucs_ft
+2026-05-07 12:24:32.424 | INFO     | app.separator:_get_model:144 - Модель успешно загружена
+2026-05-07 12:24:32.951 | INFO     | app.separator:separate:83 - Загружено: torch.Size([2, 15508847]), sr=44100
+2026-05-07 12:34:56.604 | INFO     | app.separator:__init__:60 - SourceSeparator: model=htdemucs_ft, device=cpu
+2026-05-07 12:34:56.604 | INFO     | app.separator:separate:73 - Начало разделения: data/test/sample.mp3
+2026-05-07 12:34:56.605 | INFO     | app.separator:_get_model:139 - Загрузка модели Demucs: htdemucs_ft
+2026-05-07 12:35:01.870 | INFO     | app.separator:_get_model:144 - Модель успешно загружена
+2026-05-07 12:35:01.966 | INFO     | app.separator:separate:83 - Загружено: torch.Size([1, 1323000]), sr=44100
+2026-05-07 12:35:32.520 | INFO     | app.separator:__init__:64 - SourceSeparator: model=htdemucs_ft, device=cpu
+2026-05-07 12:35:32.520 | INFO     | app.separator:separate:77 - Начало разделения: data/test/sample.mp3
+2026-05-07 12:35:32.521 | INFO     | app.separator:_get_model:143 - Загрузка модели Demucs: htdemucs_ft
+2026-05-07 12:35:36.959 | INFO     | app.separator:_get_model:148 - Модель успешно загружена
+2026-05-07 12:35:37.046 | INFO     | app.separator:separate:87 - Загружено: torch.Size([2, 1323000]), sr=44100
+2026-05-07 12:38:46.685 | INFO     | app.separator:separate:105 - Сохранён drums: output\sample\drums.wav
+2026-05-07 12:38:46.775 | INFO     | app.separator:separate:105 - Сохранён bass: output\sample\bass.wav
+2026-05-07 12:38:46.868 | INFO     | app.separator:separate:105 - Сохранён other: output\sample\other.wav
+2026-05-07 12:38:46.970 | INFO     | app.separator:separate:105 - Сохранён vocals: output\sample\vocals.wav

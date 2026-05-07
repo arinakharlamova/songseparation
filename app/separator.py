@@ -25,7 +25,11 @@ def _load_audio(audio_path: str) -> tuple[torch.Tensor, int]:
     """Загрузить аудио с помощью soundfile, вернуть тензор torch."""
     data, sr = sf.read(audio_path, dtype="float32")
     if data.ndim == 1:
-        data = data[:, np.newaxis]
+        # Convert mono to stereo by duplicating channel
+        data = np.stack([data, data], axis=1)
+    # Ensure shape (samples, channels)
+    if data.shape[1] == 1:
+        data = np.repeat(data, 2, axis=1)
     # Преобразование в torch: (каналы, сэмплы)
     waveform = torch.from_numpy(data.T)
     return waveform, sr
