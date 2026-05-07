@@ -45,7 +45,8 @@ $RECYCLE.BIN/
 .env.*
 
 # PyTorch cache
-C:/Users/Arina/.cache/torch/
+**/.cache/torch/
+**/torch_cache/
 
 # Test cache
 .pytest_cache/
