@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  music-separator:
+    build: .
+    container_name: music-separator
+    ports:
+      - "8000:8000"
+    environment:
+      - MUSIC_SEP_MODEL_NAME=htdemucs
+      - MUSIC_SEP_DEVICE=cpu
+      - MUSIC_SEP_MAX_FILE_SIZE=52428800
+      - MUSIC_SEP_MAX_DURATION=600
+    volumes:
+      - model_cache:/app/cache
+      - ./output:/app/output
+      - ./temp:/app/temp
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  model_cache:
+    driver: local

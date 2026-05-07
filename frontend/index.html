@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разделение музыки на стемы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        /* Зона перетаскивания */
+        .drop-zone {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 60px 20px;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 30px;
+        }
+
+        .drop-zone:hover, .drop-zone.dragover {
+            background: #e8eaf6;
+            border-color: #764ba2;
+            transform: scale(1.02);
+        }
+
+        .drop-zone-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .drop-zone-text {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .file-info {
+            margin-top: 20px;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .file-info.active {
+            display: block;
+        }
+
+        /* Прогресс-бар */
+        .progress-container {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .progress-container.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 15px;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .processing-time {
+            text-align: center;
+            color: #666;
+            margin-top: 10px;
+            display: none;
+        }
+
+        /* Аудио плееры */
+        .stems-container {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .stems-container.active {
+            display: block;
+        }
+
+        .stem-player {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .stem-player:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateX(5px);
+        }
+
+        .stem-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stem-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .stem-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        audio {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .download-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background: #764ba2;
+        }
+
+        .download-all {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            width: 100%;
+            transition: background 0.3s ease;
+        }
+
+        .download-all:hover {
+            background: #45a049;
+        }
+
+        /* Сообщение об ошибке */
+        .error-message {
+            display: none;
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #c62828;
+        }
+
+        .error-message.active {
+            display: block;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .drop-zone {
+                padding: 40px 20px;
+            }
+        }
+
+        /* Спиннер загрузки */
+        .spinner {
+            display: none;
+            width: 40px;
+            height: 40px;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .spinner.active {
+            display: block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 Разделение музыки на стемы</h1>
+        <p class="subtitle">Разделите музыку на вокал, барабаны, бас и остальные инструменты</p>
+
+        <!-- Зона перетаскивания -->
+        <div class="drop-zone" id="dropZone">
+            <div class="drop-zone-icon">🎤</div>
+            <div class="drop-zone-text">
+                Перетащите аудиофайл сюда<br>
+                или нажмите для выбора
+            </div>
+            <div class="drop-zone-subtext" style="color: #999; margin-top: 10px;">
+                Поддерживаемые форматы: WAV, MP3, FLAC, OGG, M4A<br>
+                Макс. размер файла: 50МБ | Макс. длительность: 10 минут
+            </div>
+            <input type="file" id="fileInput" accept=".wav,.mp3,.flac,.ogg,.m4a" style="display: none;">
+            <div class="file-info" id="fileInfo">
+                <strong>Выбранный файл:</strong> <span id="fileName"></span>
+                (<span id="fileSize"></span>)
+            </div>
+        </div>
+
+        <!-- Сообщение об ошибке -->
+        <div class="error-message" id="errorMessage"></div>
+
+        <!-- Прогресс -->
+        <div class="progress-container" id="progressContainer">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+                <div class="progress-text" id="progressText">Обработка...</div>
+            </div>
+            <p class="processing-time" id="processingTime"></p>
+        </div>
+
+        <!-- Спиннер загрузки -->
+        <div class="spinner" id="spinner"></div>
+
+        <!-- Плееры стемов -->
+        <div class="stems-container" id="stemsContainer">
+            <h2 style="margin-bottom: 20px; color: #333;">Разделённые стемы</h2>
+            
+            <div class="stem-player" id="vocalsPlayer">
+                <div class="stem-header">
+                    <span class="stem-name">
+                        <span class="stem-icon">🎤</span> Вокал
+                    </span>
+                    <a href="#" class="download-btn" id="downloadVocals">Скачать</a>
+                </div>
+                <audio controls id="vocalsAudio"></audio>
+            </div>
+
+            <div class="stem-player" id="drumsPlayer">
+                <div class="stem-header">
+                    <span class="stem-name">
+                        <span class="stem-icon">🥁</span> Барабаны
+                    </span>
+                    <a href="#" class="download-btn" id="downloadDrums">Скачать</a>
+                </div>
+                <audio controls id="drumsAudio"></audio>
+            </div>
+
+            <div class="stem-player" id="bassPlayer">
+                <div class="stem-header">
+                    <span class="stem-name">
+                        <span class="stem-icon">🎸</span> Бас
+                    </span>
+                    <a href="#" class="download-btn" id="downloadBass">Скачать</a>
+                </div>
+                <audio controls id="bassAudio"></audio>
+            </div>
+
+            <div class="stem-player" id="otherPlayer">
+                <div class="stem-header">
+                    <span class="stem-name">
+                        <span class="stem-icon">🎹</span> Остальное
+                    </span>
+                    <a href="#" class="download-btn" id="downloadOther">Скачать</a>
+                </div>
+                <audio controls id="otherAudio"></audio>
+            </div>
+
+            <button class="download-all" id="downloadAll">
+                📦 Скачать все стемы (ZIP)
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = window.location.origin;
+        
+        // Элементы DOM
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const fileInfo = document.getElementById('fileInfo');
+        const fileName = document.getElementById('fileName');
+        const fileSize = document.getElementById('fileSize');
+        const errorMessage = document.getElementById('errorMessage');
+        const progressContainer = document.getElementById('progressContainer');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const processingTime = document.getElementById('processingTime');
+        const spinner = document.getElementById('spinner');
+        const stemsContainer = document.getElementById('stemsContainer');
+        
+        // Аудио элементы
+        const audioPlayers = {
+            vocals: document.getElementById('vocalsAudio'),
+            drums: document.getElementById('drumsAudio'),
+            bass: document.getElementById('bassAudio'),
+            other: document.getElementById('otherAudio'),
+        };
+        
+        // Данные текущей задачи
+        let currentJob = null;
+        
+        // Выбор файла
+        dropZone.addEventListener('click', () => fileInput.click());
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+        
+        // Перетаскивание
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        });
+        
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('dragover');
+        });
+        
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            
+            if (e.dataTransfer.files.length > 0) {
+                handleFile(e.dataTransfer.files[0]);
+            }
+        });
+        
+        function handleFile(file) {
+            // Сброс интерфейса
+            resetUI();
+            
+            // Валидация формата файла
+            const validFormats = ['.wav', '.mp3', '.flac', '.ogg', '.m4a'];
+            const extension = '.' + file.name.split('.').pop().toLowerCase();
+            
+            if (!validFormats.includes(extension)) {
+                showError('Неподдерживаемый формат файла. Используйте WAV, MP3, FLAC, OGG или M4A.');
+                return;
+            }
+            
+            // Валидация размера файла (50МБ)
+            if (file.size > 50 * 1024 * 1024) {
+                showError('Файл слишком большой. Максимальный размер 50МБ.');
+                return;
+            }
+            
+            // Показ информации о файле
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileInfo.classList.add('active');
+            
+            // Загрузка и обработка
+            uploadAndSeparate(file);
+        }
+        
+        async function uploadAndSeparate(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+            
+            // Показ прогресса
+            progressContainer.classList.add('active');
+            spinner.classList.add('active');
+            updateProgress(10, 'Загрузка...');
+            
+            try {
+                const response = await fetch(`${API_URL}/separate`, {
+                    method: 'POST',
+                    body: formData,
+                });
+                
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.detail || 'Ошибка обработки');
+                }
+                
+                updateProgress(70, 'Разделение стемов...');
+                
+                const data = await response.json();
+                
+                updateProgress(90, 'Загрузка аудиоплееров...');
+                
+                // Сохранение данных задачи
+                currentJob = data;
+                
+                // Загрузка аудиоплееров
+                loadAudioPlayers(data.стемы || data.stems);
+                
+                // Показ времени обработки
+                processingTime.textContent = `Обработано за ${data.время_обработки.toFixed(2)} секунд`;
+                processingTime.style.display = 'block';
+                
+                // Показ стемов
+                updateProgress(100, 'Готово!');
+                setTimeout(() => {
+                    progressContainer.classList.remove('active');
+                    spinner.classList.remove('active');
+                    stemsContainer.classList.add('active');
+                }, 500);
+                
+            } catch (error) {
+                showError(error.message);
+                spinner.classList.remove('active');
+                progressContainer.classList.remove('active');
+            }
+        }
+        
+        function loadAudioPlayers(stems) {
+            // Поддержка как русских, так и английских ключей
+            const stemMapping = {
+                'вокал': 'vocals',
+                'барабаны': 'drums',
+                'бас': 'bass',
+                'остальное': 'other',
+                'vocals': 'vocals',
+                'drums': 'drums', 
+                'bass': 'bass',
+                'other': 'other'
+            };
+            
+            Object.entries(stems).forEach(([name, url]) => {
+                const stemKey = stemMapping[name];
+                if (stemKey && audioPlayers[stemKey]) {
+                    audioPlayers[stemKey].src = url;
+                    
+                    // Установка ссылок для скачивания
+                    const downloadBtn = document.getElementById(`download${stemKey.charAt(0).toUpperCase() + stemKey.slice(1)}`);
+                    if (downloadBtn) {
+                        downloadBtn.href = url;
+                        downloadBtn.download = `${name}.wav`;
+                    }
+                }
+            });
+        }
+        
+        // Скачать все стемы ZIP архивом
+        document.getElementById('downloadAll').addEventListener('click', async () => {
+            if (!currentJob) return;
+            
+            try {
+                const formData = new FormData();
+                // Используем существующий файл если есть
+                const response = await fetch(`${API_URL}/separate?return_zip=true`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/zip',
+                    },
+                });
+                
+                if (!response.ok) throw new Error('Ошибка скачивания');
+                
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'стемы.zip';
+                a.click();
+                window.URL.revokeObjectURL(url);
+                
+            } catch (error) {
+                showError('Не удалось скачать ZIP. Скачайте стемы по отдельности.');
+            }
+        });
+        
+        function updateProgress(percent, text) {
+            progressFill.style.width = percent + '%';
+            progressText.textContent = text || `${percent}%`;
+        }
+        
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.classList.add('active');
+            setTimeout(() => errorMessage.classList.remove('active'), 5000);
+        }
+        
+        function resetUI() {
+            errorMessage.classList.remove('active');
+            progressContainer.classList.remove('active');
+            stemsContainer.classList.remove('active');
+            spinner.classList.remove('active');
+            processingTime.style.display = 'none';
+            currentJob = null;
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' Б';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' КБ';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' МБ';
+        }
+        
+        // Проверка работоспособности сервиса при загрузке
+        async function checkHealth() {
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                console.log('Статус сервиса:', data);
+            } catch (error) {
+                console.warn('Сервис возможно не запущен:', error);
+            }
+        }
+        
+        checkHealth();
+    </script>
+</body>
+</html>
